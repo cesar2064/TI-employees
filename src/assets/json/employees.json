@@ -1,0 +1,38 @@
+[
+    {
+        "name":"Ripollo magnolio",
+        "age": 19,
+        "username": "ripollo@gmail.com",
+        "hireDate": 1536963008505
+    },
+    {
+        "name":"Nando Alfredo",
+        "age": 30,
+        "username": "alfred@gmail.com",
+        "hireDate": 1536963008505
+    },
+    {
+        "name":"el loco",
+        "age": 23,
+        "username": "loco@gmail.com",
+        "hireDate": 1536963008505
+    },
+    {
+        "name":"El che",
+        "age": 21,
+        "username": "che@gmail.com",
+        "hireDate": 1536963008505
+    },
+    {
+        "name":"Teleforo Rigoberto",
+        "age": 21,
+        "username": "telerigo@gmail.com",
+        "hireDate": 1536963008505
+    },
+    {
+        "name":"Manolo Ñandu",
+        "age": 22,
+        "username": "mañu@gmail.com",
+        "hireDate": 1536963008505
+    }
+]
