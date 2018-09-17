@@ -4,7 +4,7 @@ import {
     MemoizedSelector
 } from '@ngrx/store';
 
-import { State } from './state';
+import { featureAdapter, State } from './state';
 import { IEmployeeModel } from '../../shared/models/employee.model';
 
 const getError = (state: State): any => state.error;
@@ -18,6 +18,19 @@ export const selecEmployeeState: MemoizedSelector<
     State
     > = createFeatureSelector<State>('myFeature');
 
+export const selectAllEmployees: (
+    state: object
+) => IEmployeeModel[] = featureAdapter.getSelectors(selecEmployeeState).selectAll;
+
+export const selectEmployeeById = (id: number) =>
+    createSelector(this.selectAllJokeItems, (employees: IEmployeeModel[]) => {
+        if (employees) {
+            return employees.find(e => e.id === id);
+        } else {
+            return null;
+        }
+    });
+
 export const selectEmployeeError: MemoizedSelector<object, any> = createSelector(
     selecEmployeeState,
     getError
@@ -27,8 +40,3 @@ export const selectEmployeeIsLoading: MemoizedSelector<
     object,
     boolean
     > = createSelector(selecEmployeeState, getIsLoading);
-
-export const selectEmployeeList: MemoizedSelector<
-    object,
-    IEmployeeModel[]
-    > = createSelector(selecEmployeeState, getEmployees);

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable, of as observableOf } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, startWith } from 'rxjs/operators';
 import * as featureActions from './actions';
 import { EmployeeService } from '../../shared/services/employee.service';
 
@@ -15,6 +15,7 @@ export class EmployeeStoreEffects {
         ofType<featureActions.EmployeeRequestAction>(
             featureActions.ActionTypes.EMPLOYEE_REQUEST
         ),
+        startWith(new featureActions.EmployeeRequestAction({ filter: {} })),
         switchMap(action =>
             this.employeeService
                 .list()

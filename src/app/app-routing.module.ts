@@ -1,11 +1,12 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { CommonLayoutComponent } from './core/layouts/common-layout/common-layout.component';
 const routes: Routes = [
     {
         path: '', redirectTo: 'employees', pathMatch: 'full'
     },
     {
-        path: 'employees', loadChildren: './employee/employee.module#EmployeeModule'
+        path: 'employees', component: CommonLayoutComponent, loadChildren: './employee/employee.module#EmployeeModule'
     }
 ];
 
