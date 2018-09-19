@@ -1,0 +1,48 @@
+@import "../../../../scss/globals/functions";
+
+form {
+  max-width: 800px;
+  min-width: 500px;
+}
+
+mat-form-field,
+app-employee-job-title {
+  width: 100%;
+  padding: 0 5px 0 5px;
+}
+
+.areas {
+  mat-button-toggle-group {
+    position: absolute;
+    bottom: 52px;
+  }
+
+  mat-label {
+    position: absolute;
+    top: 21px;
+    @include materialFont();
+  }
+
+  mat-error {
+    position: absolute;
+    bottom: 30px;
+    left: 120px;
+    @include materialSmallFont();
+  }
+}
+
+.job-field {
+  mat-error {
+    position: absolute;
+    bottom: 27px;
+    left: 25px;
+    @include materialSmallFont();
+  }
+}
+
+.status {
+  mat-slide-toggle {
+    position: absolute;
+    left: 9px;
+  }
+}

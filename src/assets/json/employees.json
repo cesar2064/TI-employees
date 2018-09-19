@@ -1,43 +1,43 @@
 [{
     "id": 1,
     "name": "Ripollo magnolio",
-    "age": 19,
+    "dob": "5/22/1989",
     "username": "ripollo@gmail.com",
-    "hireDate": 1536963008505
+    "hireDate": "9/17/2018"
   },
   {
     "id": 2,
     "name": "Nando Alfredo",
-    "age": 30,
+    "dob": "4/25/1980",
     "username": "alfred@gmail.com",
-    "hireDate": 1536963008505
+    "hireDate": "9/17/2018"
   },
   {
     "id": 3,
     "name": "el loco",
-    "age": 23,
+    "dob": "1/23/1981",
     "username": "loco@gmail.com",
-    "hireDate": 1536963008505
+    "hireDate": "9/17/2018"
   },
   {
     "id": 4,
     "name": "El che",
-    "age": 21,
+    "dob": "4/30/1990",
     "username": "che@gmail.com",
-    "hireDate": 1536963008505
+    "hireDate": "9/17/2018"
   },
   {
     "id": 5,
     "name": "Teleforo Rigoberto",
-    "age": 21,
+    "dob": "09/22/1986",
     "username": "telerigo@gmail.com",
-    "hireDate": 1536963008505
+    "hireDate": "9/17/2018"
   },
   {
     "id": 6,
     "name": "Manolo Ñandu",
-    "age": 22,
+    "dob": "12/25/1991",
     "username": "mañu@gmail.com",
-    "hireDate": 1536963008505
+    "hireDate": "9/17/2018"
   }
 ]

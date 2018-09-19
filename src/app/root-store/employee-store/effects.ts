@@ -1,14 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { Observable, of as observableOf } from 'rxjs';
-import { catchError, map, switchMap, startWith } from 'rxjs/operators';
+import { catchError, map, switchMap, startWith, withLatestFrom, filter } from 'rxjs/operators';
 import * as featureActions from './actions';
 import { EmployeeService } from '../../shared/services/employee.service';
+import { IEmployeeModel } from '../../shared/models/employee.model';
+import { RootStoreState } from '..';
 
 @Injectable()
 export class EmployeeStoreEffects {
-    constructor(private employeeService: EmployeeService, private actions$: Actions) { }
+    constructor(
+        private employeeService: EmployeeService,
+        private actions$: Actions,
+        private store$: Store<RootStoreState.State>
+    ) { }
+
+    private employeeList: IEmployeeModel[];
 
     @Effect()
     employeeRequestEffect$: Observable<Action> = this.actions$.pipe(
@@ -16,20 +24,20 @@ export class EmployeeStoreEffects {
             featureActions.ActionTypes.EMPLOYEE_REQUEST
         ),
         startWith(new featureActions.EmployeeRequestAction({ filter: {} })),
-        switchMap(action =>
-            this.employeeService
+        withLatestFrom(this.store$),
+        switchMap(actionAndState => {
+            return this.employeeService
                 .list()
                 .pipe(
                     map(
-                        employees =>
-                            new featureActions.EmployeeSuccessAction({
-                                employees
-                            })
+                        employees => new featureActions.EmployeeSuccessAction({
+                            employees
+                        })
                     ),
                     catchError(error =>
                         observableOf(new featureActions.EmployeeErrorAction({ error }))
                     )
-                )
-        )
+                );
+        })
     );
 }

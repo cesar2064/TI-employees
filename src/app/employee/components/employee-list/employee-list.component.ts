@@ -1,9 +1,12 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, OnChanges } from '@angular/core';
 import { IEmployeeModel } from '../../../shared/models/employee.model';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { FormGroup, FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { CommonComponent } from '../../../shared/abstract/common-component.abstract';
+import { RootStoreState } from '../../../root-store';
+import { Store } from '@ngrx/store';
+import { EmployeeDeleteAction, EmployeeSuccessAction, EmployeeRequestAction } from '../../../root-store/employee-store/actions';
 
 @Component({
   selector: 'app-employee-list',
@@ -12,18 +15,30 @@ import { CommonComponent } from '../../../shared/abstract/common-component.abstr
 })
 export class EmployeeListComponent extends CommonComponent implements OnInit {
 
-  @Input() employees: IEmployeeModel[];
+  private employeesDataSource: MatTableDataSource<IEmployeeModel>;
+
+  @Input()
+  set employees(value: IEmployeeModel[]) {
+    this.employeesDataSource = new MatTableDataSource(value);
+    this.employeesDataSource.sort = this.sort;
+  }
+
   @Input() searchForm: {
     group: FormGroup,
     controlName: string
   };
+  @Input() isLoading: boolean;
+
   @ViewChild(MatSort) sort: MatSort;
-  employeeDataSource: MatTableDataSource<IEmployeeModel>;
   displayedColumns: string[] = ['id', 'name', 'age', 'username', 'hireDate', 'actions'];
 
+  constructor(
+    private store$: Store<RootStoreState.State>
+  ) {
+    super();
+  }
+
   ngOnInit() {
-    this.employeeDataSource = new MatTableDataSource(this.employees);
-    this.employeeDataSource.sort = this.sort;
     const searchControl = this.searchForm.group.controls[this.searchForm.controlName] as FormControl;
 
     // search functionality
@@ -32,8 +47,12 @@ export class EmployeeListComponent extends CommonComponent implements OnInit {
       debounceTime(400),
       distinctUntilChanged()
     ).subscribe((value) => {
-      this.employeeDataSource.filter = value.trim().toLowerCase();
+      this.employeesDataSource.filter = value.trim().toLowerCase();
     });
+  }
+
+  delete(id: number) {
+    this.store$.dispatch(new EmployeeDeleteAction({ id }));
   }
 
 }

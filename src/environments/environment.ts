@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   api: {
-    employee: '/assets/json/employees.json'
+    employee: '/assets/json/employees.json',
+    countries: 'https://restcountries.eu/rest/v2'
   }
 };
 

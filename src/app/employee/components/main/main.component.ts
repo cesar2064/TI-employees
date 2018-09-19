@@ -4,14 +4,16 @@ import { RootStoreState, EmployeeStoreSelectors, EmployeeStoreActions } from '..
 import { Observable } from 'rxjs';
 import { IEmployeeModel } from '../../../shared/models/employee.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { CommonComponent } from '../../../shared/abstract/common-component.abstract';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit {
-  employees$: Observable<IEmployeeModel[]>;
+export class MainComponent extends CommonComponent implements OnInit {
+  employees: IEmployeeModel[];
   error$: Observable<any>;
   isLoading$: Observable<boolean>;
   searchForm: FormGroup;
@@ -19,7 +21,9 @@ export class MainComponent implements OnInit {
   constructor(
     private store$: Store<RootStoreState.State>,
     private fb: FormBuilder
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.searchForm = this.fb.group(
@@ -27,16 +31,15 @@ export class MainComponent implements OnInit {
         valueToSearch: []
       }
     );
-    this.employees$ = this.store$.select(
-      EmployeeStoreSelectors.selectAllEmployees
-    );
     this.isLoading$ = this.store$.select(
       EmployeeStoreSelectors.selectEmployeeIsLoading
-    );
+    ).pipe(takeUntil(this.destroy$));
     this.error$ = this.store$.select(
       EmployeeStoreSelectors.selectEmployeeError
-    );
-    this.store$.dispatch(new EmployeeStoreActions.EmployeeRequestAction({ filter: {} }));
+    ).pipe(takeUntil(this.destroy$));
+    this.store$.select('employee').pipe(takeUntil(this.destroy$)).subscribe((data) => {
+      this.employees = data.employees;
+    });
   }
 
 }

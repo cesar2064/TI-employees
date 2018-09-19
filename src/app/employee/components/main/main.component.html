@@ -6,6 +6,6 @@
     <mat-hint>Search by anything</mat-hint>
   </mat-form-field>
 </form>
-<app-employee-list [employees]="employees$ | async" [searchForm]="{group:searchForm, controlName:'valueToSearch'}"></app-employee-list>
+<app-employee-list [employees]="employees" [isLoading]="isLoading$ | async" [searchForm]="{group:searchForm, controlName:'valueToSearch'}"></app-employee-list>
 
-<button class="add-employee" mat-stroked-button><i class="material-icons">add</i> Add new employee</button>
+<button routerLink="./edit" class="add-employee" mat-stroked-button><i class="material-icons">add</i> Add new employee</button>

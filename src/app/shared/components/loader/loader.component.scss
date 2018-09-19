@@ -1,0 +1,5 @@
+@import '../../../../scss/globals/functions';
+.comp-loader {
+  @include commonLoader();
+  position: relative;
+}

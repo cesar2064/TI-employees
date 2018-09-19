@@ -1,0 +1,86 @@
+<h2>{{title}}</h2>
+<form [formGroup]="employeeForm">
+  <mat-grid-list cols="2" rowHeight="130px">
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name">
+        <mat-error *ngIf="employeeForm.controls.name.invalid && employeeForm.controls.name.touched">Invalid name</mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile class="areas">
+      <mat-label>Area</mat-label>
+      <mat-button-toggle-group #areasButtons formControlName="area" (change)="area = $event.value" name="fontStyle"
+        aria-label="Font Style">
+        <mat-button-toggle value="services">Services</mat-button-toggle>
+        <mat-button-toggle value="kitchen">Kitchen</mat-button-toggle>
+      </mat-button-toggle-group>
+      <mat-error *ngIf="employeeForm.controls.area.invalid && (employeeForm.controls.area.touched || formSent)">You
+        must select an area</mat-error>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Dob</mat-label>
+        <input matInput [matDatepicker]="dobPicker" formControlName="dob" placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+        <mat-datepicker #dobPicker></mat-datepicker>
+        <mat-error *ngIf="employeeForm.controls.dob.invalid && employeeForm.controls.dob.touched">
+          Date is invalid or has less than 18 years from today
+        </mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile class="job-field">
+      <app-employee-job-title [area]="area" formControlName="jobTitle"></app-employee-job-title>
+      <mat-error *ngIf="employeeForm.controls.jobTitle.invalid && (employeeForm.controls.jobTitle.touched || formSent)">You
+        must select a job title</mat-error>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Country</mat-label>
+        <mat-select formControlName="country" placeholder="State">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let country of countries" [value]="country.alpha3Code">{{country.name}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="employeeForm.controls.country.invalid && employeeForm.controls.country.touched">You must
+          select a country</mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Tip Rate</mat-label>
+        <input matInput formControlName="tipRate" placeholder="%">
+        <mat-error *ngIf="employeeForm.controls.tipRate.invalid && employeeForm.controls.tipRate.touched">Invalid
+          tip rate</mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username">
+        <mat-error *ngIf="employeeForm.controls.username.invalid && employeeForm.controls.username.touched">Invalid
+          username</mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Hire Date</mat-label>
+        <input matInput [matDatepicker]="hirePicker" formControlName="hireDate" placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="hirePicker"></mat-datepicker-toggle>
+        <mat-datepicker #hirePicker></mat-datepicker>
+        <mat-error *ngIf="employeeForm.controls.hireDate.invalid && employeeForm.controls.hireDate.touched">
+          Date is invalid or is greater than today
+        </mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="2" class="status">
+      <mat-slide-toggle labelPosition="before" formControlName="status">Status</mat-slide-toggle>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-button routerLink="../"><i class="material-icons">arrow_back</i> Back</button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-raised-button [disabled]="employeeForm.invalid" (click)="save()"><i class="material-icons">save_alt</i>
+        Save</button>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>

@@ -8,7 +8,7 @@ import { EmployeeStoreEffects } from './effects';
 @NgModule({
   imports: [
     CommonModule,
-    StoreModule.forFeature('myFeature', employeeReducer),
+    StoreModule.forFeature('employee', employeeReducer),
     EffectsModule.forFeature([EmployeeStoreEffects])
   ],
   providers: [

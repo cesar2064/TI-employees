@@ -2,24 +2,42 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { MainComponent } from './components/main/main.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule, MatTableModule, MatSortModule } from '@angular/material';
+import { MatInputModule, MatTableModule, MatSortModule, MatNativeDateModule } from '@angular/material';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatSelectModule} from '@angular/material/select';
 import { EmployeeListComponent } from './components/employee-list/employee-list.component';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EmployeeFormComponent } from './components/employee-form/employee-form.component';
+import { SharedModule } from '../shared/shared.module';
+import { CountriesResolver } from '../shared/services/countries.resolver';
+import { EmployeeJobTitleComponent } from './components/employee-job-title/employee-job-title.component';
 
 const routes: Routes = [
     {
         path: '',
         component: MainComponent
+    },
+    {
+        path: 'edit',
+        resolve: {
+            countries: CountriesResolver
+        },
+        component: EmployeeFormComponent
     }
 ];
 
 @NgModule({
     declarations: [
         MainComponent,
-        EmployeeListComponent
+        EmployeeListComponent,
+        EmployeeFormComponent,
+        EmployeeJobTitleComponent
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -29,8 +47,15 @@ const routes: Routes = [
         MatTableModule,
         MatSortModule,
         MatButtonModule,
+        MatGridListModule,
+        MatButtonToggleModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatSelectModule,
         ReactiveFormsModule,
-        CommonModule
+        MatSlideToggleModule,
+        CommonModule,
+        SharedModule
     ]
 })
 export class EmployeeRoutingModule { }
