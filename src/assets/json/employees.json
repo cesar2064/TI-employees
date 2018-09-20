@@ -1,0 +1,70 @@
+[{
+    "id": 1,
+    "name": "Ripollo magnolio",
+    "dob": "5/22/1989",
+    "username": "ripollo@gmail.com",
+    "hireDate": "9/17/2018",
+    "area": "services",
+    "jobTitle": "waitress",
+    "country": "COL",
+    "status": true,
+    "tipRate": 10
+  },
+  {
+    "id": 2,
+    "name": "Nando Alfredo",
+    "dob": "4/25/1980",
+    "username": "alfred@gmail.com",
+    "hireDate": "9/17/2018",
+    "area": "kitchen",
+    "jobTitle": "chef",
+    "country": "COL",
+    "status": false
+  },
+  {
+    "id": 3,
+    "name": "el loco",
+    "dob": "1/23/1981",
+    "username": "loco@gmail.com",
+    "hireDate": "9/17/2018",
+    "area": "services",
+    "jobTitle": "waitress",
+    "country": "COL",
+    "status": true,
+    "tipRate": 10
+  },
+  {
+    "id": 4,
+    "name": "El che",
+    "dob": "4/30/1990",
+    "username": "che@gmail.com",
+    "hireDate": "9/17/2018",
+    "area": "kitchen",
+    "jobTitle": "chef",
+    "country": "COL",
+    "status": false
+  },
+  {
+    "id": 5,
+    "name": "Teleforo Rigoberto",
+    "dob": "09/22/1986",
+    "username": "telerigo@gmail.com",
+    "hireDate": "9/17/2018",
+    "area": "services",
+    "jobTitle": "waitress",
+    "country": "COL",
+    "status": true,
+    "tipRate": 10
+  },
+  {
+    "id": 6,
+    "name": "Manolo Ñandu",
+    "dob": "12/25/1991",
+    "username": "mañu@gmail.com",
+    "hireDate": "9/17/2018",
+    "area": "kitchen",
+    "jobTitle": "chef",
+    "country": "COL",
+    "status": false
+  }
+]
