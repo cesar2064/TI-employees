@@ -5,6 +5,7 @@ import {
 } from '@ngrx/store';
 
 import { featureAdapter, State } from './state';
+import { RootStoreState } from '../../root-store';
 import { IEmployeeModel } from '../../shared/models/employee.model';
 
 const getError = (state: State): any => state.error;
@@ -23,11 +24,10 @@ export const selectAllEmployees: (
 
 export const findOneEmployee = (id: number | string) =>
     createSelector(
-        selectAllEmployees,
+        (state: RootStoreState.State) => state.employee.employees,
         (employees) => {
             return employees.find((employee) => Number(id) === employee.id);
         });
-
 
 
 export const selectEmployeeError: MemoizedSelector<object, any> = createSelector(
