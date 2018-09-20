@@ -7,7 +7,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule, MatTableModule, MatSortModule, MatNativeDateModule } from '@angular/material';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { EmployeeListComponent } from './components/employee-list/employee-list.component';
@@ -31,7 +31,6 @@ const routes: Routes = [
         data: {
             mode: 'add'
         },
-        canDeactivate: [EmployeSaveDeactivate],
         resolve: {
             countries: CountriesResolver
         },
@@ -68,7 +67,7 @@ const routes: Routes = [
         EmployeeJobTitleComponent,
         LeaveEmployeeSaveDialogComponent
     ],
-    entryComponents:[
+    entryComponents: [
         LeaveEmployeeSaveDialogComponent
     ],
     providers: [

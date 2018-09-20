@@ -23,6 +23,7 @@ export class EmployeeFormComponent extends CommonComponent implements OnInit {
     area: string;
     formSent = false;
     mode = 'add';
+    isSaving = false;
     constructor(
         private fb: FormBuilder,
         private acr: ActivatedRoute,
@@ -143,9 +144,15 @@ export class EmployeeFormComponent extends CommonComponent implements OnInit {
         jobTitleControl.enable();
     }
 
+    goBack() {
+        this.isSaving = false;
+        this.router.navigate(['/employees']);
+    }
+
     save() {
+        this.isSaving = true;
         this.store$.dispatch(new EmployeeSaveAction({ employee: this.employeeForm.value }));
         this.formSent = true;
-        this.router.navigate(['../']);
+        this.router.navigate(['/employees']);
     }
 }

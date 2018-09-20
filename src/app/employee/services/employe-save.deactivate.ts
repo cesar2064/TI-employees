@@ -20,7 +20,7 @@ export class EmployeSaveDeactivate implements CanDeactivate<EmployeeFormComponen
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
     nextState: RouterStateSnapshot): boolean {
-    if (component.employeeForm.dirty) {
+    if (component.employeeForm.dirty && !component.isSaving) {
       const dialog = this.dialog.open(LeaveEmployeeSaveDialogComponent, {
         width: '250px'
       });

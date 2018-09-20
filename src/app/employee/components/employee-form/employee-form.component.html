@@ -76,7 +76,7 @@
       <mat-slide-toggle labelPosition="before" formControlName="status">Status</mat-slide-toggle>
     </mat-grid-tile>
     <mat-grid-tile>
-      <button mat-button routerLink="/employees"><i class="material-icons">arrow_back</i> Back</button>
+      <button mat-button (click)="goBack()"><i class="material-icons">arrow_back</i> Back</button>
     </mat-grid-tile>
     <mat-grid-tile>
       <button mat-raised-button *ngIf="mode !== 'view'" [disabled]="employeeForm.invalid" (click)="save()"><i class="material-icons">save_alt</i>
