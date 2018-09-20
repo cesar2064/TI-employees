@@ -20,6 +20,16 @@ export const selectAllEmployees: (
     state: object
 ) => IEmployeeModel[] = featureAdapter.getSelectors(selecEmployeeState).selectAll;
 
+
+export const findOneEmployee = (id: number | string) =>
+    createSelector(
+        selectAllEmployees,
+        (employees) => {
+            return employees.find((employee) => Number(id) === employee.id);
+        });
+
+
+
 export const selectEmployeeError: MemoizedSelector<object, any> = createSelector(
     selecEmployeeState,
     getError

@@ -6,9 +6,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule, MatTableModule, MatSortModule, MatNativeDateModule } from '@angular/material';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatDialogModule} from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { EmployeeListComponent } from './components/employee-list/employee-list.component';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -17,6 +18,8 @@ import { EmployeeFormComponent } from './components/employee-form/employee-form.
 import { SharedModule } from '../shared/shared.module';
 import { CountriesResolver } from '../shared/services/countries.resolver';
 import { EmployeeJobTitleComponent } from './components/employee-job-title/employee-job-title.component';
+import { EmployeSaveDeactivate } from './services/employe-save.deactivate';
+import { LeaveEmployeeSaveDialogComponent } from './components/leave-employee-save-dialog/leave-employee-save-dialog.component';
 
 const routes: Routes = [
     {
@@ -24,7 +27,32 @@ const routes: Routes = [
         component: MainComponent
     },
     {
-        path: 'edit',
+        path: 'add',
+        data: {
+            mode: 'add'
+        },
+        canDeactivate: [EmployeSaveDeactivate],
+        resolve: {
+            countries: CountriesResolver
+        },
+        component: EmployeeFormComponent
+    },
+    {
+        path: 'edit/:id',
+        data: {
+            mode: 'edit'
+        },
+        canDeactivate: [EmployeSaveDeactivate],
+        resolve: {
+            countries: CountriesResolver
+        },
+        component: EmployeeFormComponent
+    },
+    {
+        path: 'view/:id',
+        data: {
+            mode: 'view'
+        },
         resolve: {
             countries: CountriesResolver
         },
@@ -37,7 +65,14 @@ const routes: Routes = [
         MainComponent,
         EmployeeListComponent,
         EmployeeFormComponent,
-        EmployeeJobTitleComponent
+        EmployeeJobTitleComponent,
+        LeaveEmployeeSaveDialogComponent
+    ],
+    entryComponents:[
+        LeaveEmployeeSaveDialogComponent
+    ],
+    providers: [
+        EmployeSaveDeactivate
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -54,6 +89,7 @@ const routes: Routes = [
         MatSelectModule,
         ReactiveFormsModule,
         MatSlideToggleModule,
+        MatDialogModule,
         CommonModule,
         SharedModule
     ]

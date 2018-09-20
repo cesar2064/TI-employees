@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ICountryModel } from '../../../shared/models/country.model';
 import { ActivatedRoute } from '@angular/router';
@@ -22,7 +22,7 @@ export class EmployeeFormComponent extends CommonComponent implements OnInit {
     countries: ICountryModel[] = [];
     area: string;
     formSent = false;
-
+    mode = 'add';
     constructor(
         private fb: FormBuilder,
         private acr: ActivatedRoute,
@@ -35,17 +35,45 @@ export class EmployeeFormComponent extends CommonComponent implements OnInit {
     ngOnInit() {
         this.acr.data.pipe(takeUntil(this.destroy$)).subscribe((data) => {
             this.countries = data.countries;
+            this.mode = data.mode;
+            this.initForm();
         });
-        this.initForm();
+        this.acr.params.pipe(takeUntil(this.destroy$)).subscribe((params) => {
+            this.handleModes(params);
+        });
     }
 
-    private initForm(): void {
+    private handleModes(params: any) {
+        if (this.mode === 'edit' || this.mode === 'view') {
+            if (this.mode === 'view') {
+                this.employeeForm.disable();
+                this.title = 'View Employee';
+            } else {
+                const jobTitleControl = this.employeeForm.controls.jobTitle as FormControl;
+                jobTitleControl.enable();
+                this.title = 'Edit Employee';
+            }
+            this.store$.select(
+                EmployeeStoreSelectors.findOneEmployee(params.id)
+            ).pipe(takeUntil(this.destroy$)).subscribe((employee) => {
+                this.area = employee.area;
+                const patchValue = {
+                    ...employee,
+                    dob: new Date(employee.dob),
+                    hireDate: new Date(employee.hireDate)
+                };
+                this.employeeForm.patchValue(patchValue);
+            });
+        }
 
+    }
+    private initForm(): void {
         this.employeeForm = this.fb.group({
+            id: [''],
             name: ['', Validators.required],
             area: ['', Validators.required],
             dob: ['', Validators.compose([Validators.required, this.validateAge])],
-            jobTitle: ['', Validators.required],
+            jobTitle: [{ value: '', disabled: true }, Validators.required],
             country: ['', Validators.required],
             tipRate: [{ value: '', disabled: true }],
             username: ['', Validators.compose([Validators.required, Validators.pattern(/[0-9a-zA-Z]+/g)])],
@@ -94,9 +122,11 @@ export class EmployeeFormComponent extends CommonComponent implements OnInit {
         jobTitleControl.valueChanges.pipe(takeUntil(this.destroy$), distinctUntilChanged()).subscribe((job) => {
             switch (job) {
                 case 'waitress': case 'dinningroommanager':
-                    // validates only when the field is enabled
-                    tipRateControl.setValidators(tipRateValidators);
-                    tipRateControl.enable({ onlySelf: true });
+                    if (this.mode !== 'view') {
+                        // validates only when the field is enabled
+                        tipRateControl.setValidators(tipRateValidators);
+                        tipRateControl.enable({ onlySelf: true });
+                    }
                     break;
                 default:
                     tipRateControl.clearValidators();
@@ -105,6 +135,12 @@ export class EmployeeFormComponent extends CommonComponent implements OnInit {
             }
         });
 
+    }
+
+    areaChanged(area: string): void {
+        this.area = area;
+        const jobTitleControl = this.employeeForm.controls.jobTitle as FormControl;
+        jobTitleControl.enable();
     }
 
     save() {

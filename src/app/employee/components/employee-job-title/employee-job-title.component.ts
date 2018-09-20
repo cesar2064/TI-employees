@@ -17,6 +17,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class EmployeeJobTitleComponent implements ControlValueAccessor {
 
   private _area: string;
+  disabled = false;
 
   @ViewChild('select') select: MatSelect;
 
@@ -86,6 +87,10 @@ export class EmployeeJobTitleComponent implements ControlValueAccessor {
 
   registerOnTouched(fn) {
     this.propagateTouch = fn;
+  }
+
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
   }
 
   writeValue(value: any) {

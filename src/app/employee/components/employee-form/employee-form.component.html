@@ -10,7 +10,7 @@
     </mat-grid-tile>
     <mat-grid-tile class="areas">
       <mat-label>Area</mat-label>
-      <mat-button-toggle-group #areasButtons formControlName="area" (change)="area = $event.value" name="fontStyle"
+      <mat-button-toggle-group #areasButtons formControlName="area" (change)="areaChanged($event.value)" name="fontStyle"
         aria-label="Font Style">
         <mat-button-toggle value="services">Services</mat-button-toggle>
         <mat-button-toggle value="kitchen">Kitchen</mat-button-toggle>
@@ -76,10 +76,10 @@
       <mat-slide-toggle labelPosition="before" formControlName="status">Status</mat-slide-toggle>
     </mat-grid-tile>
     <mat-grid-tile>
-      <button mat-button routerLink="../"><i class="material-icons">arrow_back</i> Back</button>
+      <button mat-button routerLink="/employees"><i class="material-icons">arrow_back</i> Back</button>
     </mat-grid-tile>
     <mat-grid-tile>
-      <button mat-raised-button [disabled]="employeeForm.invalid" (click)="save()"><i class="material-icons">save_alt</i>
+      <button mat-raised-button *ngIf="mode !== 'view'" [disabled]="employeeForm.invalid" (click)="save()"><i class="material-icons">save_alt</i>
         Save</button>
     </mat-grid-tile>
   </mat-grid-list>

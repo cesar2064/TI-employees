@@ -1,6 +1,6 @@
 <mat-form-field appearance="outline" [ngClass]="{'mat-form-field-invalid':error, 'ng-invalid':error}">
   <mat-label>Job Title</mat-label>
-  <mat-select [disabled]="!area" (selectionChange)="change($event.value)" #select placeholder="State">
+  <mat-select [disabled]="disabled" (selectionChange)="change($event.value)" #select placeholder="State">
     <mat-option [value]="">None</mat-option>
     <mat-option *ngFor="let job of jobs" [value]="job.key">{{job.description}}</mat-option>
   </mat-select>  

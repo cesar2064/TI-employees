@@ -20,10 +20,17 @@ export function employeeReducer(state = initialState, action: Actions): State {
             });
         case ActionTypes.EMPLOYEE_SAVE:
             const employee: IEmployeeModel = action.payload.employee;
-            employee.id = state.employees[state.employees.length - 1].id + 1;
-            state.employees.push(employee);
             employee.hireDate = moment(employee.hireDate).format('MM/DD/YYYY');
             employee.dob = moment(employee.dob).format('MM/DD/YYYY');
+            if (employee.id) {
+                const foundEmp = state.employees.find((emp) => {
+                    return employee.id === emp.id;
+                });
+                Object.assign(foundEmp, employee);
+            } else {
+                employee.id = state.employees[state.employees.length - 1].id + 1;
+                state.employees.push(employee);
+            }
             return {
                 ...state,
                 isLoading: false,

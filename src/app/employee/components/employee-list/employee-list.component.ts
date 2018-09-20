@@ -27,6 +27,7 @@ export class EmployeeListComponent extends CommonComponent implements OnInit {
     group: FormGroup,
     controlName: string
   };
+
   @Input() isLoading: boolean;
 
   @ViewChild(MatSort) sort: MatSort;
